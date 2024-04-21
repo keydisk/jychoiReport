@@ -6,6 +6,8 @@
 ### Alamofire, RxSwift, Combine, Snapkit
 ## 사용 언어
 ### Swift, Objective C (DetailNewsViewController에서만 사용)
+## 공통 라이브러리 SPM 으로 추가
+- https://github.com/keydisk/CommonLibrary 
 
 ## 폴더 구조
 ### Scens : 뷰들의 집합
