@@ -23,7 +23,7 @@ final class jyChoiReportTests: XCTestCase {
 
     var cancelationList = Set<AnyCancellable>()
     
-    func testRequest() throws {
+    func test알라모파이어로_뉴스요청_정상적으로_되는지_확인() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         // Any test you write for XCTest can be annotated as throws and async.
@@ -46,7 +46,7 @@ final class jyChoiReportTests: XCTestCase {
         wait(for: [expectation], timeout: 5)
     }
     
-    func testUrlSession() throws {
+    func testURLSession으로_뉴스요청_정상적으로_되는지_확인() {
         
         let expectation = XCTestExpectation(description: "\(#function)")
         
@@ -60,6 +60,59 @@ final class jyChoiReportTests: XCTestCase {
             assert(data.count > 0)
             expectation.fulfill()
         }).store(in: &cancelationList)
+        
+        wait(for: [expectation], timeout: 5)
+    }
+
+    var parsingDisposable: Disposable?
+    func test정상적으로_결과가_파싱되는지_확인() {
+        // This is an example of a functional test case.
+        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        // Any test you write for XCTest can be annotated as throws and async.
+        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
+        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+        
+        let expectation = XCTestExpectation(description: "\(#function)")
+        
+        let viewModel = NewsViewModel()
+        
+        self.parsingDisposable = viewModel.newsList.bind(onNext: {list in
+            
+            guard let list = list else {
+                return
+            }
+            
+            assert(list.count > 0)
+            expectation.fulfill()
+        })
+        
+        viewModel.requestNewsList()
+        
+        wait(for: [expectation], timeout: 5)
+    }
+    
+    func test뉴스_상세로_이동시_정상적으로_저장되는지_확인() {
+        
+        let expectation = XCTestExpectation(description: "\(#function)")
+        
+        let viewModel = NewsViewModel()
+        
+        MoveApp.removeAllData()
+        
+        self.parsingDisposable = viewModel.newsList.bind(onNext: {list in
+            
+            guard let list = list, let model = list.first else {
+                return
+            }
+            
+            viewModel.moveNewsDetail(model)
+            let coreDataList = MoveApp.getData() ?? []
+            assert(coreDataList.first?.urlNews?.absoluteString ==  model.newsUrl)
+            
+            expectation.fulfill()
+        })
+        
+        viewModel.requestNewsList()
         
         wait(for: [expectation], timeout: 5)
     }
