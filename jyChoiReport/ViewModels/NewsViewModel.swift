@@ -97,6 +97,7 @@ class NewsViewModel {
                 return tmpModel
             })
         )
+        
     }
     
     var requestNewsListCancelable: AnyCancellable?
