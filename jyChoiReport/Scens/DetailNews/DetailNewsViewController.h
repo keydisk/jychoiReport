@@ -6,9 +6,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "jyChoiReport-Swift.h"
+
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class CustomWKWebView;
+@protocol CustomWKWebViewDelegate;
 
 @interface DetailNewsViewController : UIViewController<CustomWKWebViewDelegate>
 

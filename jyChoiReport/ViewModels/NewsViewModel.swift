@@ -19,17 +19,30 @@ class NewsViewModel {
     private let networkMonitor: NWPathMonitor
     /// 네트웍 연결 여부
     var isNetworkConnection = true
-    
+    /// News API
     private let api = NewsAPI()
-    public let newsList = BehaviorRelay<[PrintArticle]?>(value: nil)
     
+    /// 뉴스를 표시하기 위한 리스트
+    public let newsList = BehaviorRelay<[PrintArticle]?>(value: nil)
+    /// 뉴스 요청시 에러 발생이벤트
+    public let newsRequetError = PublishSubject<NSError>()
+    /// 뉴스를 선택했을때 연결되는 옵져버블
+    public let selectNews = PublishSubject<PrintArticle>()
+    /// 뉴스 상세로 이동하기 위한 퍼블리셔
     public let moveNewsDetail = PassthroughSubject<PrintArticle, Never>()
     
+    private let dispose = DisposeBag()
     init() {
         
         self.networkMonitor = NWPathMonitor()
         
         self.startNetworkMonitoring()
+        
+        /// 뉴스 연결
+        self.selectNews.bind(onNext: {[weak self] model in
+            
+            self?.newsDetailProcess(model)
+        }).disposed(by: self.dispose)
     }
     
     private func startNetworkMonitoring() {
@@ -58,7 +71,7 @@ class NewsViewModel {
     }
     
     /// 뉴스 상세로 이동
-    func moveNewsDetail(_ model: PrintArticle) {
+    func newsDetailProcess(_ model: PrintArticle) {
         
         if MoveApp.getData(model: model.article)?.first == nil {
             
@@ -90,11 +103,6 @@ class NewsViewModel {
     /// 뉴스 리스트 조회
     func requestNewsList() {
         
-        #if DEBUG
-        let callCnt = (UserDefaults.standard.object(forKey: "callApi") as? NSNumber)?.intValue ?? 1
-        print("api callCnt : \(callCnt)")
-        self.isNetworkConnection = false
-        #endif
         guard self.isNetworkConnection else {
             
             guard let newsModel = NewsModel.localSavedNewsModel else {
@@ -107,23 +115,17 @@ class NewsViewModel {
         }
         
         self.requestNewsListCancelable?.cancel()
-        self.requestNewsListCancelable = self.api.requestNewsFromAlamofire().sink(receiveCompletion: {complete in
+        self.requestNewsListCancelable = self.api.requestNewsFromAlamofire().sink(receiveCompletion: {[weak self]complete in
             
             switch complete {
             case .finished:
                 break
             case .failure(let error):
+                self?.newsRequetError.onNext(error)
                 break
             }
         }, receiveValue: {[unowned self] data in
-
-            #if DEBUG
-            let callCnt = (UserDefaults.standard.object(forKey: "callApi") as? NSNumber)?.intValue ?? 1
             
-            print("callCnt : \(callCnt)")
-            UserDefaults.standard.setValue(NSNumber(value: callCnt + 1), forKey: "callApi")
-            UserDefaults.standard.synchronize()
-            #endif
             do  {
                 let newsModel = try JSONDecoder().decode(NewsModel.self, from: data)
                 

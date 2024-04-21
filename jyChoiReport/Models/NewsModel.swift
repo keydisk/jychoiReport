@@ -52,6 +52,13 @@ struct Article: Codable {
     }
 }
 
+// MARK: - Source
+struct Source: Codable {
+    let id: String?
+    let name: String
+}
+
+/// 뉴스를 화면에 표시할때 필요한 정보 설정
 struct PrintArticle {
     
     let article: Article
@@ -72,10 +79,4 @@ struct PrintArticle {
     var newsUrl: String {
         article.url
     }
-}
-
-// MARK: - Source
-struct Source: Codable {
-    let id: String?
-    let name: String
 }

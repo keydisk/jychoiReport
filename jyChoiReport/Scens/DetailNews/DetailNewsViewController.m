@@ -6,6 +6,7 @@
 //
 
 #import "DetailNewsViewController.h"
+#import "jyChoiReport-Swift.h"
 
 @interface DetailNewsViewController ()
 
@@ -23,6 +24,32 @@
     return self;
 }
 
+- (void) startWebViewIndigator {
+    UIActivityIndicatorView *indigator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleLarge];
+    
+    indigator.tintColor = [UIColor darkGrayColor];
+    
+    [self.view addSubview: indigator];
+    
+    [indigator startAnimating];
+    
+    indigator.center = self.view.center;
+}
+
+- (void) stopWebViewIndigator {
+    
+    for(int i = 0; i<self.view.subviews.count; i++) {
+        
+        if ([self.view.subviews[i] isKindOfClass: UIActivityIndicatorView.class ]) {
+            
+            UIActivityIndicatorView * indigator = ((UIActivityIndicatorView *)self.view.subviews[i]);
+            [indigator stopAnimating];
+            [indigator removeFromSuperview];
+            break;
+        }
+    }
+}
+
 - (void) uiSetting {
     
     CustomWKWebView *webView = [[CustomWKWebView alloc] init];
@@ -33,6 +60,7 @@
     
     [webView setWebviewDelegate: self];
     [webView requestUrl: self.url];
+    [webView setUseProgressBar];
     
     NSLayoutConstraint *leading = [NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:0.0];
     
@@ -51,16 +79,17 @@
     
     [self uiSetting];
     self.title = self.newsTitle;
+    self.navigationController.navigationBar.tintColor = UIColor.grayColor;
 }
 
 // MARK: - CustomWebview delegate
-- (BOOL)isHttpRequestUrlWithCallUrl:(NSURL * _Nullable)callUrl { 
+- (BOOL)isHttpRequestUrlWithCallUrl:(NSURL * _Nullable)callUrl {
     return TRUE;
 }
 
 - (void) loadingFinish {
     
-    if (self.webView.title == nil) {
+    if ([self.webView.title isEqual: @""]) {
         
         return;
     }

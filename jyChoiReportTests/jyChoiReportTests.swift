@@ -105,7 +105,7 @@ final class jyChoiReportTests: XCTestCase {
                 return
             }
             
-            viewModel.moveNewsDetail(model)
+            viewModel.newsDetailProcess(model)
             let coreDataList = MoveApp.getData() ?? []
             assert(coreDataList.first?.urlNews?.absoluteString ==  model.newsUrl)
             

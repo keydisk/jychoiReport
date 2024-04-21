@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 /// 뉴스 상세
-class DetailNewsViewController: UIViewController {
+class _DetailNewsViewController: UIViewController {
     
     let webView: CustomWKWebView
     let model: PrintArticle
@@ -38,7 +38,6 @@ class DetailNewsViewController: UIViewController {
         })
         
         self.webView.requestUrl(requestUrl: self.model.newsUrl)
-        
         self.webView.webviewDelegate = self
     }
     
@@ -52,7 +51,7 @@ class DetailNewsViewController: UIViewController {
     }
 }
 
-extension DetailNewsViewController: CustomWKWebViewDelegate {
+extension _DetailNewsViewController: CustomWKWebViewDelegate {
     
     func isHttpRequestUrl(callUrl: URL?) -> Bool {
         

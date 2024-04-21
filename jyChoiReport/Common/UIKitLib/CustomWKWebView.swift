@@ -141,6 +141,11 @@ class CustomWKWebView: WKWebView, WKUIDelegate, WKNavigationDelegate, WKScriptMe
         }
     }
     
+    @objc(setUseProgressBar)
+    func useProgressBar() {
+        self.isUseProgressBar = true
+    }
+    
     let networkTimeout = TimeInterval(20)
     /// 웹뷰가 속한 뷰 컨트롤러 닫기
     public var closeWebView: (() -> Void)?
@@ -153,11 +158,18 @@ class CustomWKWebView: WKWebView, WKUIDelegate, WKNavigationDelegate, WKScriptMe
         self.initWKWebView(isNavigationGestrue)
     }
     
-    init(isNavigationGestrue: Bool = false) {
+    init(isNavigationGestrue: Bool) {
     
         super.init(frame: .zero, configuration: WKWebViewConfiguration() )
         
         self.initWKWebView(isNavigationGestrue)
+    }
+    
+    init() {
+        
+        super.init(frame: .zero, configuration: WKWebViewConfiguration() )
+        
+        self.initWKWebView(false)
     }
     
     required init?(coder: NSCoder) {
@@ -195,12 +207,12 @@ class CustomWKWebView: WKWebView, WKUIDelegate, WKNavigationDelegate, WKScriptMe
         progressBar.translatesAutoresizingMaskIntoConstraints = false;
         self.addSubview(progressBar)
         
-        progressBar.progressTintColor = .darkGray
+        progressBar.progressTintColor = .orange
         progressBar.trackTintColor    = .lightGray
         progressBar.progressViewStyle = .default
         
-        let xLoc   = NSLayoutConstraint(item: progressBar, attribute: .left,   relatedBy: .equal, toItem: self, attribute: .left,   multiplier: 1.0,  constant: 0.0)
-        let yLoc   = NSLayoutConstraint(item: progressBar, attribute: .top,    relatedBy: .equal, toItem: self, attribute: .top,    multiplier: 1.0,  constant: 0.0)
+        let xLoc   = NSLayoutConstraint(item: progressBar, attribute: .leading,   relatedBy: .equal, toItem: self, attribute: .leading,   multiplier: 1.0,  constant: 0.0)
+        let yLoc   = NSLayoutConstraint(item: progressBar, attribute: .bottom,    relatedBy: .equal, toItem: self, attribute: .bottom,    multiplier: 1.0,  constant: 0.0)
         let width  = NSLayoutConstraint(item: progressBar, attribute: .width,  relatedBy: .equal, toItem: self, attribute: .width,  multiplier: 1.0,  constant: 0.0)
         let height = NSLayoutConstraint(item: progressBar, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 3.0)
         
@@ -584,8 +596,6 @@ class CustomWKWebView: WKWebView, WKUIDelegate, WKNavigationDelegate, WKScriptMe
             
             self.callOtherScheme = callUrl
             
-            self.webviewDelegate?.stopWebViewIndigator?()
-            
             UIApplication.shared.open(callUrl!, completionHandler: { _ in
                 
                 DispatchQueue.main.async {[weak self] in
@@ -801,6 +811,7 @@ class CustomWKWebView: WKWebView, WKUIDelegate, WKNavigationDelegate, WKScriptMe
         self.webviewDelegate?.stopWebViewIndigator?()
         
         self.progressBar?.isHidden = true
+        self.webviewDelegate?.stopWebViewIndigator?()
         self.webviewDelegate?.loadingFinish?()
     }
     

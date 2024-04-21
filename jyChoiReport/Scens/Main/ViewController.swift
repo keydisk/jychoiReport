@@ -14,27 +14,31 @@ import RxCocoa
 
 class ViewController: UIViewController {
     
+    /// 뉴스 관련 비지니스 로직을 처리하는 뷰모델
     let viewModel = NewsViewModel()
+    
     let disposeBag = DisposeBag()
     var cancelableList = Set<AnyCancellable>()
     
+    /// 뉴스항목을 표시할 컬렉션뷰
     var collectionView: UICollectionView!
     
-    
+    /// UI 그리기
     func setupView() {
         
-        let layoutView = UICollectionViewFlowLayout()
-        
-        layoutView.minimumInteritemSpacing = 8
-        layoutView.scrollDirection = .vertical // 스크롤 방향 설정
-        layoutView.itemSize = .zero
-//        layoutView.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        let layoutView = ColumnFlowLayout()
+        layoutView.sectionInsetReference = .fromContentInset
+        layoutView.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        layoutView.minimumInteritemSpacing = 10
+        layoutView.minimumLineSpacing = 10
+        layoutView.sectionInset = .zero
+        layoutView.scrollDirection = .vertical
         
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layoutView)
         
-        self.collectionView.delegate = self
-        
         self.collectionView.register(ArticleElementCell.self, forCellWithReuseIdentifier: "ArticleElementCell")
+        self.collectionView.register(ArticleElementCell.self, forCellWithReuseIdentifier: "LandscapeArticleElementCell")
+        
         self.view.addSubview(self.collectionView)
         
         self.collectionView.snp.makeConstraints({m in
@@ -42,27 +46,55 @@ class ViewController: UIViewController {
             m.edges.equalToSuperview()
         })
         
+        /// 세로로 당겼을때 화면 리프래시
+        self.collectionView.refreshControl = UIRefreshControl()
+        self.collectionView.refreshControl?.addTarget(self, action: #selector(refreshControl), for: .valueChanged)
+    }
+    
+    private func dataBiding() {
+        
+        self.viewModel.newsRequetError.bind(onNext: {[weak self] error in
+            
+            self?.collectionView.refreshControl?.endRefreshing()
+        }).disposed(by: self.disposeBag)
+        
         self.viewModel.newsList.asDriver(onErrorJustReturn: nil).filter({list -> Bool in
             list != nil
-        }).map({list in
-            list ?? []
+        }).map({[weak self] list in
+            
+            self?.collectionView.refreshControl?.endRefreshing()
+            return list ?? []
         }).drive(self.collectionView.rx.items) { collectionView, row, model in
             
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ArticleElementCell", for: IndexPath(row: row, section: 0)) as! ArticleElementCell
+            var cell: ArticleElementCell!
+            if UIDevice.current.orientation.isLandscape {
+                
+                cell = (collectionView.dequeueReusableCell(withReuseIdentifier: "LandscapeArticleElementCell", for: IndexPath(row: row, section: 0)) as! ArticleElementCell)
+            } else {
+                
+                cell = (collectionView.dequeueReusableCell(withReuseIdentifier: "ArticleElementCell", for: IndexPath(row: row, section: 0)) as! ArticleElementCell)
+            }
             
             cell.setDatasource(model: model)
             
             return cell
+            
         }.disposed(by: self.disposeBag)
         
         self.collectionView.rx.modelSelected(PrintArticle.self)
-            .subscribe(onNext: self.viewModel.moveNewsDetail)
+            .bind(to: self.viewModel.selectNews)
         .disposed(by: self.disposeBag)
         
         self.viewModel.moveNewsDetail.receive(on: DispatchQueue.main).sink(receiveValue: {[weak self] model in
             
-            self?.moveNewsDetail(model)
+            let newsDetailView = DetailNewsViewController(model.title, url: model.newsUrl)
+            self?.navigationController?.pushViewController(newsDetailView, animated: true)
         }).store(in: &cancelableList)
+        
+        self.viewModel.requestNewsList()
+    }
+    
+    @objc func refreshControl() {
         
         self.viewModel.requestNewsList()
     }
@@ -71,39 +103,17 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        self.setupView()
-        
         self.title = "뉴스 메인"
-    }
-    
-    private func moveNewsDetail(_ selectedModel: PrintArticle) {
         
-        let newsDetailView = DetailNewsViewController(selectedModel.title, url: selectedModel.newsUrl)
-        self.navigationController?.pushViewController(newsDetailView, animated: true)
+        self.setupView()
+        self.dataBiding()
     }
-    
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
-        self.collectionView.layoutIfNeeded()
+        self.collectionView.reloadData()
     }
     
-}
-
-extension ViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
-    
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        if !UIDevice.current.orientation.isLandscape {
-            
-            return CGSize(width: collectionView.bounds.size.width, height: 90)
-        } else {
-            
-            return CGSize(width: (collectionView.bounds.size.width - 16) / 3, height: 90)
-        }
-        
-        
-    }
 }
