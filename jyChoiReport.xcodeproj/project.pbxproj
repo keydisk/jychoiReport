@@ -10,7 +10,6 @@
 		C01F37A92BD53110002C5B5D /* MyLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = C01F37A82BD53110002C5B5D /* MyLibrary */; };
 		C06916372BD3AAA8009C16F8 /* ArticleElementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06916362BD3AAA8009C16F8 /* ArticleElementCell.swift */; };
 		C069163A2BD3AC00009C16F8 /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06916392BD3AC00009C16F8 /* UIImageViewExtension.swift */; };
-		C06916402BD47B82009C16F8 /* AppLocalData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C069163E2BD47B82009C16F8 /* AppLocalData.xcdatamodeld */; };
 		C06916432BD47BE4009C16F8 /* MoveApp+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06916412BD47BE4009C16F8 /* MoveApp+CoreDataClass.swift */; };
 		C06916442BD47BE4009C16F8 /* MoveApp+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06916422BD47BE4009C16F8 /* MoveApp+CoreDataProperties.swift */; };
 		C06916492BD483F6009C16F8 /* ColumnFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06916482BD483F6009C16F8 /* ColumnFlowLayout.swift */; };
@@ -20,6 +19,7 @@
 		C08CB2672BD393060080F0C5 /* NewsApiUrls.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08CB2662BD393060080F0C5 /* NewsApiUrls.swift */; };
 		C08CB26A2BD396730080F0C5 /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08CB2692BD396730080F0C5 /* NewsModel.swift */; };
 		C08CB26F2BD396A30080F0C5 /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08CB26E2BD396A30080F0C5 /* NewsViewModel.swift */; };
+		C0AACC662BF3A21E00CB9BA0 /* AppLocalData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C0AACC642BF3A21E00CB9BA0 /* AppLocalData.xcdatamodeld */; };
 		C0F6C8612BD342B0008833C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F6C8602BD342B0008833C0 /* AppDelegate.swift */; };
 		C0F6C8632BD342B0008833C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F6C8622BD342B0008833C0 /* SceneDelegate.swift */; };
 		C0F6C8652BD342B0008833C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F6C8642BD342B0008833C0 /* ViewController.swift */; };
@@ -60,7 +60,6 @@
 /* Begin PBXFileReference section */
 		C06916362BD3AAA8009C16F8 /* ArticleElementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleElementCell.swift; sourceTree = "<group>"; };
 		C06916392BD3AC00009C16F8 /* UIImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
-		C069163F2BD47B82009C16F8 /* AppLocalData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AppLocalData.xcdatamodel; sourceTree = "<group>"; };
 		C06916412BD47BE4009C16F8 /* MoveApp+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoveApp+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C06916422BD47BE4009C16F8 /* MoveApp+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoveApp+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C06916482BD483F6009C16F8 /* ColumnFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnFlowLayout.swift; sourceTree = "<group>"; };
@@ -72,6 +71,7 @@
 		C08CB2662BD393060080F0C5 /* NewsApiUrls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsApiUrls.swift; sourceTree = "<group>"; };
 		C08CB2692BD396730080F0C5 /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
 		C08CB26E2BD396A30080F0C5 /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
+		C0AACC652BF3A21E00CB9BA0 /* AppLocalData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AppLocalData.xcdatamodel; sourceTree = "<group>"; };
 		C0F6C85D2BD342B0008833C0 /* jyChoiReport.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jyChoiReport.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0F6C8602BD342B0008833C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0F6C8622BD342B0008833C0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -139,13 +139,6 @@
 			path = UIKitExtension;
 			sourceTree = "<group>";
 		};
-		C069163B2BD3ADEE009C16F8 /* Foundation */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Foundation;
-			sourceTree = "<group>";
-		};
 		C06916452BD47FA4009C16F8 /* Storyboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -186,10 +179,10 @@
 		C08CB2682BD396660080F0C5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C0AACC642BF3A21E00CB9BA0 /* AppLocalData.xcdatamodeld */,
 				C06916412BD47BE4009C16F8 /* MoveApp+CoreDataClass.swift */,
 				C06916422BD47BE4009C16F8 /* MoveApp+CoreDataProperties.swift */,
 				C08CB2692BD396730080F0C5 /* NewsModel.swift */,
-				C069163E2BD47B82009C16F8 /* AppLocalData.xcdatamodeld */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -306,7 +299,6 @@
 			isa = PBXGroup;
 			children = (
 				C06916472BD483E4009C16F8 /* UIKitLib */,
-				C069163B2BD3ADEE009C16F8 /* Foundation */,
 				C06916382BD3ABEF009C16F8 /* UIKitExtension */,
 				C0F6C8A32BD34EFE008833C0 /* Const */,
 			);
@@ -474,6 +466,7 @@
 				C08CB2672BD393060080F0C5 /* NewsApiUrls.swift in Sources */,
 				C0F6C8A52BD34F0B008833C0 /* ApiConstants.swift in Sources */,
 				C08CB26A2BD396730080F0C5 /* NewsModel.swift in Sources */,
+				C0AACC662BF3A21E00CB9BA0 /* AppLocalData.xcdatamodeld in Sources */,
 				C069164B2BD494EB009C16F8 /* CustomWKWebView.swift in Sources */,
 				C06916572BD51695009C16F8 /* _DetailNewsViewController.swift in Sources */,
 				C0F6C8632BD342B0008833C0 /* SceneDelegate.swift in Sources */,
@@ -482,7 +475,6 @@
 				C0F6C8A72BD350B8008833C0 /* NewsAPI.swift in Sources */,
 				C06916372BD3AAA8009C16F8 /* ArticleElementCell.swift in Sources */,
 				C0F6C8A92BD3517D008833C0 /* CommonParam.swift in Sources */,
-				C06916402BD47B82009C16F8 /* AppLocalData.xcdatamodeld in Sources */,
 				C069163A2BD3AC00009C16F8 /* UIImageViewExtension.swift in Sources */,
 				C06916432BD47BE4009C16F8 /* MoveApp+CoreDataClass.swift in Sources */,
 				C06916442BD47BE4009C16F8 /* MoveApp+CoreDataProperties.swift in Sources */,
@@ -676,11 +668,12 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.milliesLibrary.jyChoiReport;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -706,11 +699,12 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.milliesLibrary.jyChoiReport;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -897,12 +891,12 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		C069163E2BD47B82009C16F8 /* AppLocalData.xcdatamodeld */ = {
+		C0AACC642BF3A21E00CB9BA0 /* AppLocalData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				C069163F2BD47B82009C16F8 /* AppLocalData.xcdatamodel */,
+				C0AACC652BF3A21E00CB9BA0 /* AppLocalData.xcdatamodel */,
 			);
-			currentVersion = C069163F2BD47B82009C16F8 /* AppLocalData.xcdatamodel */;
+			currentVersion = C0AACC652BF3A21E00CB9BA0 /* AppLocalData.xcdatamodel */;
 			name = AppLocalData.xcdatamodeld;
 			path = /Users/juyoungchoi/Projects/Test/jyChoiReport/jyChoiReport/Models/AppLocalData.xcdatamodeld;
 			sourceTree = "<group>";

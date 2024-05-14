@@ -196,7 +196,7 @@ class APIClient: NSObject {
                 }
                 
                     #if DEBUG
-                    print("return data : \(String(data: data, encoding: .utf8) ?? "")")
+//                    print("return data : \(String(data: data, encoding: .utf8) ?? "")")
                     #endif
                 combine.send(data)
                 combine.send(completion: .finished)
