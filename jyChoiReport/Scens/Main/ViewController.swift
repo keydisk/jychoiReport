@@ -91,7 +91,7 @@ class ViewController: UIViewController {
             self?.navigationController?.pushViewController(newsDetailView, animated: true)
         }).store(in: &cancelableList)
         
-        self.viewModel.requestNewsList()
+//        self.viewModel.requestNewsList()
     }
     
     @objc func refreshControl() {

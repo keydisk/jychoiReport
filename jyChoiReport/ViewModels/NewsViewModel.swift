@@ -43,6 +43,7 @@ class NewsViewModel {
             
             self?.newsDetailProcess(model)
         }).disposed(by: self.dispose)
+
     }
     
     private func startNetworkMonitoring() {
@@ -61,6 +62,7 @@ class NewsViewModel {
     }
     
     private func convertArticleModel(_ newsModel: NewsModel) -> [PrintArticle] {
+        
         newsModel.articles.map({model in
             var rtnModel = PrintArticle(article: model, didView: false)
             
@@ -134,7 +136,7 @@ class NewsViewModel {
                 NewsModel.saveNewsModel(data)
                 
                 #if DEBUG
-                print("newsModel.articles : \(newsModel.articles)")
+//                print("newsModel.articles : \(newsModel.articles)")
                 #endif
                 self.newsList.accept(self.convertArticleModel(newsModel) )
             } catch let error {
